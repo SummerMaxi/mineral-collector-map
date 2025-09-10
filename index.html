@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mineral Collector Map</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Header Controls -->
+        <div class="header-controls">
+            <div class="logo">
+                <i class="fas fa-gem"></i>
+                <span>Mineral Collectors</span>
+            </div>
+        </div>
+        
+        <!-- Top Right Controls -->
+        <div class="top-right-controls">
+            <!-- View Toggle -->
+            <div class="toggle-container">
+                <label class="toggle-label">
+                    <input type="checkbox" id="viewToggle" />
+                    <span class="toggle-slider"></span>
+                    <span class="toggle-text">
+                        <span class="collectors-text">Collectors</span>
+                        <span class="collections-text">Collection</span>
+                    </span>
+                </label>
+            </div>
+            
+            <!-- Theme Toggle -->
+            <button id="themeToggle" class="theme-btn">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+        
+        <!-- Map Container -->
+        <div id="map"></div>
+        
+        <!-- Compact Stats Panel -->
+        <div id="statsPanel" class="stats-panel">
+            <div class="stat-compact">
+                <span class="stat-number" id="totalCollectors">30</span>
+                <span class="stat-label">Collectors</span>
+            </div>
+            <div class="stat-compact">
+                <span class="stat-number" id="totalMinerals">847</span>
+                <span class="stat-label">Minerals</span>
+            </div>
+            <div class="stat-compact">
+                <span class="stat-number" id="totalCountries">15</span>
+                <span class="stat-label">Countries</span>
+            </div>
+        </div>
+        
+        <!-- Compact Legend -->
+        <div id="legend" class="legend-compact">
+            <div class="legend-item">
+                <span class="legend-color high"></span>
+                <span>High</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color medium"></span>
+                <span>Med</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color low"></span>
+                <span>Low</span>
+            </div>
+        </div>
+        
+        <!-- Collection Panel -->
+        <div id="collectionPanel" class="collection-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <h2 id="panelStateTitle">My Collection</h2>
+                    <p id="panelStateSubtitle">Select a state to view collection</p>
+                </div>
+                <button id="closePanelBtn" class="close-panel-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="panel-content">
+                <div class="collection-stats-header">
+                    <div class="stat-item">
+                        <span class="stat-number" id="panelMineralCount">0</span>
+                        <span class="stat-label">Specimens</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="panelSpeciesCount">0</span>
+                        <span class="stat-label">Species</span>
+                    </div>
+                    <div class="focus-badge" id="panelFocusBadge">0% Focus</div>
+                </div>
+                
+                <div class="collection-description" id="panelDescription">
+                    Click on a highlighted state to view your mineral collection from that area.
+                </div>
+                
+                <div class="minerals-container" id="mineralsContainer">
+                    <!-- Mineral cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Screen -->
+        <div id="loadingScreen" class="loading-screen">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p>Loading Mineral Collector Globe...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

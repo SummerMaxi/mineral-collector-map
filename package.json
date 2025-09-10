@@ -1,0 +1,19 @@
+{
+  "name": "mineral-collector-map",
+  "version": "1.0.0",
+  "description": "A modern 3D globe application for exploring mineral collectors and their collections worldwide",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "python -m http.server 8000",
+    "start": "python -m http.server 8000"
+  },
+  "keywords": [
+    "minerals",
+    "mapbox",
+    "globe",
+    "3d",
+    "collectors"
+  ],
+  "author": "",
+  "license": "MIT"
+}

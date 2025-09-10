@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(MAPBOX_ACCESS_TOKEN=\"test_token_12345\" DEFAULT_THEME=\"light\" node build.js)",
+      "Bash(git init:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

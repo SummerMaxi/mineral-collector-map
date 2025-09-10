@@ -1,0 +1,12 @@
+{
+  "buildCommand": "node build.js",
+  "outputDirectory": ".",
+  "framework": null,
+  "functions": {},
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
+}
