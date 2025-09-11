@@ -1,0 +1,639 @@
+// Fabian Wildfang's Mineral Collection Data
+const fabianCollection = 
+{
+  "collector": {
+    "name": "Fabian Wildfang",
+    "url": "https://earthwonders.com/collectors/9arqO9BV",
+    "collectorId": "9arqO9BV",
+    "description": "",
+    "location": ""
+  },
+  "focusAreas": [
+    {
+      "name": "Brazil",
+      "country": "Brazil",
+      "specimenCount": 3,
+      "speciesCount": 5,
+      "species": [
+        "Tourmaline",
+        "Cleavelandite",
+        "Feldspar",
+        "Uvite",
+        "Quartz"
+      ],
+      "specimens": [
+        {
+          "id": "87442",
+          "title": "Tourmaline with Cleavelandite and Feldspar",
+          "species": [
+            "Tourmaline",
+            "Cleavelandite",
+            "Feldspar"
+          ],
+          "minerals": [
+            "Tourmaline",
+            "Cleavelandite",
+            "Feldspar"
+          ],
+          "location": "Brazil, Minas Gerais, Coronel Murta",
+          "locality": "Brazil, Minas Gerais, Coronel Murta",
+          "size": "Cabinet",
+          "dimensions": "Cabinet",
+          "description": "<p>Wonderful spray of multicolored Tourmaline crystals, some flat terminated, some pointed, ranging from brown to rhubarb-red, colorless to teal with a fiery red terminations perched upon a Feldspar crystal with white Cleavelandite blades and some Lepidolite.</p>",
+          "properties": {
+            "Locality": "Brazil, Minas Gerais, Coronel Murta",
+            "Species": "Tourmaline, Cleavelandite, Feldspar",
+            "Size": "Cabinet"
+          },
+          "images": [
+            {
+              "url": "https://cdn.earthwonders.com/uploads/300c8942-7190-4d97-bbfe-3836cef21a35",
+              "alt": "",
+              "title": ""
+            }
+          ]
+        },
+        {
+          "id": "87440",
+          "title": "Uvite on iron-stained Quartz",
+          "species": [
+            "Uvite",
+            "Quartz"
+          ],
+          "minerals": [
+            "Uvite",
+            "Quartz"
+          ],
+          "location": "Brazil, Bahia, Brumado",
+          "locality": "Brazil, Bahia, Brumado",
+          "size": "Small Cabinet",
+          "dimensions": "Small Cabinet",
+          "description": "<p>Dark-green Uvite crystals of 2 cm in size, perched upon an orange-red teinted group of Quartz crystals in a cactus-like shape.</p>",
+          "properties": {
+            "Locality": "Brazil, Bahia, Brumado",
+            "Species": "Uvite, Quartz",
+            "Size": "Small Cabinet"
+          },
+          "images": [
+            {
+              "url": "https://cdn.earthwonders.com/uploads/b6c0501b-7983-484d-8031-659caaec450a",
+              "alt": "",
+              "title": ""
+            }
+          ]
+        },
+        {
+          "id": "87445",
+          "title": "Tourmaline on Quartz",
+          "species": [
+            "Tourmaline",
+            "Quartz"
+          ],
+          "minerals": [
+            "Tourmaline",
+            "Quartz"
+          ],
+          "location": "Brazil, Minas Gerais, São José da Safira",
+          "locality": "Brazil, Minas Gerais, São José da Safira",
+          "size": "Cabinet",
+          "dimensions": "Cabinet",
+          "description": "<p>Bunch of three bluesih-green Tourmaline crystals of up to 12 cm, showing a red core and a olive-green termination, perched nicely onto a cluster of white Quartz crystals of up to 7 cm in size.</p>",
+          "properties": {
+            "Locality": "Brazil, Minas Gerais, São José da Safira",
+            "Species": "Tourmaline, Quartz",
+            "Size": "Cabinet"
+          },
+          "images": [
+            {
+              "url": "https://cdn.earthwonders.com/uploads/2dada91f-c828-421f-bcfc-47ac76082923",
+              "alt": "",
+              "title": ""
+            }
+          ]
+        }
+      ],
+      "coordinates": {
+        "latitude": -14.235,
+        "longitude": -51.9253
+      },
+      "intensity": 1
+    },
+    {
+      "name": "USA",
+      "country": "USA",
+      "specimenCount": 3,
+      "speciesCount": 6,
+      "species": [
+        "Gold",
+        "Milky quartz",
+        "Calcite",
+        "Dolomite",
+        "Fluorite",
+        "Sphalerite"
+      ],
+      "specimens": [
+        {
+          "id": "87451",
+          "title": "Gold on Quartz",
+          "species": [
+            "Gold",
+            "Milky quartz"
+          ],
+          "minerals": [
+            "Gold",
+            "Milky quartz"
+          ],
+          "location": "USA, California, Eagle's Nest Mine (Mystery Wind Mine)",
+          "locality": "USA, California, Eagle's Nest Mine (Mystery Wind Mine)",
+          "size": "Small Cabinet",
+          "dimensions": "Small Cabinet",
+          "description": "<p>Impressive group of golden-yellow crystals and sheets of Gold of 6 cm in size, with some Quartz matrix.</p>",
+          "properties": {
+            "Locality": "USA, California, Eagle's Nest Mine (Mystery Wind Mine)",
+            "Species": "Gold, Milky quartz",
+            "Size": "Small Cabinet"
+          },
+          "images": [
+            {
+              "url": "https://cdn.earthwonders.com/uploads/c1a9049d-8114-4c12-b6d8-8265eaf05ed8",
+              "alt": "",
+              "title": ""
+            }
+          ]
+        },
+        {
+          "id": "87447",
+          "title": "Calcite on Dolomite",
+          "species": [
+            "Calcite",
+            "Dolomite"
+          ],
+          "minerals": [
+            "Calcite",
+            "Dolomite"
+          ],
+          "location": "USA, Tennessee, Elmwood Mine",
+          "locality": "USA, Tennessee, Elmwood Mine",
+          "size": "Small Cabinet",
+          "dimensions": "Small Cabinet",
+          "description": "<p>Brilliant clear butterfly-twin of Calcite with cognac colored tips, 8 cm in length, perched dramatically on contrasting Dolomite and grey matrix.</p>",
+          "properties": {
+            "Locality": "USA, Tennessee, Elmwood Mine",
+            "Species": "Calcite, Dolomite",
+            "Size": "Small Cabinet"
+          },
+          "images": [
+            {
+              "url": "https://cdn.earthwonders.com/uploads/a3041a7d-6f63-468d-945d-c4b8f0a56e75",
+              "alt": "",
+              "title": ""
+            }
+          ]
+        },
+        {
+          "id": "87450",
+          "title": "Fluorite with Calcite",
+          "species": [
+            "Fluorite",
+            "Calcite",
+            "Sphalerite"
+          ],
+          "minerals": [
+            "Fluorite",
+            "Calcite",
+            "Sphalerite"
+          ],
+          "location": "USA, Illinois, Minerva No. 1 Mine",
+          "locality": "USA, Illinois, Minerva No. 1 Mine",
+          "size": "Small Cabinet",
+          "dimensions": "Small Cabinet",
+          "description": "<p>Blue cubes of Fluorite with violet phantoms, 6 cm in size, perched upon white spheres of Calcite with accenting Sphalerite and Calcite scalenohedrons of 1 cm in size.</p>",
+          "properties": {
+            "Locality": "USA, Illinois, Minerva No. 1 Mine",
+            "Species": "Fluorite, Calcite, Sphalerite",
+            "Size": "Small Cabinet"
+          },
+          "images": [
+            {
+              "url": "https://cdn.earthwonders.com/uploads/709721da-0321-43d7-86b7-875ff334ca73",
+              "alt": "",
+              "title": ""
+            }
+          ]
+        }
+      ],
+      "coordinates": {
+        "latitude": 39.8283,
+        "longitude": -98.5795
+      },
+      "intensity": 1
+    },
+    {
+      "name": "China",
+      "country": "China",
+      "specimenCount": 2,
+      "speciesCount": 5,
+      "species": [
+        "Aragonite",
+        "Calcite",
+        "Aquamarine",
+        "Muscovite",
+        "Cassiterite"
+      ],
+      "specimens": [
+        {
+          "id": "87452",
+          "title": "Cobaltoan Aragonite on Calcite",
+          "species": [
+            "Aragonite",
+            "Calcite"
+          ],
+          "minerals": [
+            "Aragonite",
+            "Calcite"
+          ],
+          "location": "China, Yunnan, Wenshan Mine",
+          "locality": "China, Yunnan, Wenshan Mine",
+          "size": "Miniature",
+          "dimensions": "Miniature",
+          "description": "<p>Violet boytoridal Aragonite structures in the shape of an ape, sized 4 cm, sitting on a sphere of beige Calcite of 3 cm in diameter.</p>",
+          "properties": {
+            "Locality": "China, Yunnan, Wenshan Mine",
+            "Species": "Aragonite, Calcite",
+            "Size": "Miniature"
+          },
+          "images": [
+            {
+              "url": "https://cdn.earthwonders.com/uploads/749b4f8c-e4e9-410b-b089-af403ddd5e9a",
+              "alt": "",
+              "title": ""
+            }
+          ]
+        },
+        {
+          "id": "87448",
+          "title": "Aquamarine with Muscovite",
+          "species": [
+            "Aquamarine",
+            "Muscovite",
+            "Cassiterite"
+          ],
+          "minerals": [
+            "Aquamarine",
+            "Muscovite",
+            "Cassiterite"
+          ],
+          "location": "China, Sichuan, Mount Little Xuebaoding",
+          "locality": "China, Sichuan, Mount Little Xuebaoding",
+          "size": "Miniature",
+          "dimensions": "Miniature",
+          "description": "<p>Pale blue Aquamarine crystal of 5 cm size, along with beige Muscovite blades on shiny black Cassiterite crystals.</p>",
+          "properties": {
+            "Locality": "China, Sichuan, Mount Little Xuebaoding",
+            "Species": "Aquamarine, Muscovite, Cassiterite",
+            "Size": "Miniature"
+          },
+          "images": [
+            {
+              "url": "https://cdn.earthwonders.com/uploads/d8f9711e-2dae-47f5-8d66-639bcab07413",
+              "alt": "",
+              "title": ""
+            }
+          ]
+        }
+      ],
+      "coordinates": {
+        "latitude": 35.8617,
+        "longitude": 104.1954
+      },
+      "intensity": 0.6666666666666666
+    },
+    {
+      "name": "Colombia",
+      "country": "Colombia",
+      "specimenCount": 1,
+      "speciesCount": 2,
+      "species": [
+        "Quartz group",
+        "Halloysite"
+      ],
+      "specimens": [
+        {
+          "id": "87449",
+          "title": "Mangoquartz on Matrix",
+          "species": [
+            "Quartz group",
+            "Halloysite"
+          ],
+          "minerals": [
+            "Quartz group",
+            "Halloysite"
+          ],
+          "location": "Colombia, Boyacá Department, Cabiche",
+          "locality": "Colombia, Boyacá Department, Cabiche",
+          "size": "Cabinet",
+          "dimensions": "Cabinet",
+          "description": "<p>Dramatic spray of colorless to white Quartz crystals with yellow tips, colored by inclusions of Halloysite, sitting on grey Matrix.</p>",
+          "properties": {
+            "Locality": "Colombia, Boyacá Department, Cabiche",
+            "Species": "Quartz group, Halloysite",
+            "Size": "Cabinet"
+          },
+          "images": [
+            {
+              "url": "https://cdn.earthwonders.com/uploads/6bc91f3b-b878-4e7e-b320-56c1262e4a3f",
+              "alt": "",
+              "title": ""
+            }
+          ]
+        }
+      ],
+      "coordinates": {
+        "latitude": 4.5709,
+        "longitude": -74.2973
+      },
+      "intensity": 0.3333333333333333
+    },
+    {
+      "name": "Russia",
+      "country": "Russia",
+      "specimenCount": 1,
+      "speciesCount": 3,
+      "species": [
+        "Tourmaline",
+        "Cleavelandite",
+        "Quartz"
+      ],
+      "specimens": [
+        {
+          "id": "87438",
+          "title": "Tourmaline with Cleavelandite and Quartz",
+          "species": [
+            "Tourmaline",
+            "Cleavelandite",
+            "Quartz"
+          ],
+          "minerals": [
+            "Tourmaline",
+            "Cleavelandite",
+            "Quartz"
+          ],
+          "location": "Russia, Zabaykalsky Krai, Malkhan pegmatite field",
+          "locality": "Russia, Zabaykalsky Krai, Malkhan pegmatite field",
+          "size": "Small Cabinet",
+          "dimensions": "Small Cabinet",
+          "description": "<p>Lustrous pink-red Tourmaline crystal of 10 cm in length, clamped between a group of milky, slightly sceptered and doubly terminated Quartz crystals of 5 cm in length on the ones side, and wonderful bluish colored roses of Cleavelandite blades on the other side.</p>",
+          "properties": {
+            "Locality": "Russia, Zabaykalsky Krai, Malkhan pegmatite field",
+            "Species": "Tourmaline, Cleavelandite, Quartz",
+            "Size": "Small Cabinet"
+          },
+          "images": [
+            {
+              "url": "https://cdn.earthwonders.com/uploads/0dd381bf-2ff0-481f-aec1-b4a6c6fb2c2c",
+              "alt": "",
+              "title": ""
+            },
+            {
+              "url": "https://cdn.earthwonders.com/uploads/9ca419bd-ef04-4368-92d6-d27ced0bfd02",
+              "alt": "",
+              "title": ""
+            }
+          ]
+        }
+      ],
+      "coordinates": {
+        "latitude": 61.524,
+        "longitude": 105.3188
+      },
+      "intensity": 0.3333333333333333
+    },
+    {
+      "name": "Bolivia",
+      "country": "Bolivia",
+      "specimenCount": 1,
+      "speciesCount": 1,
+      "species": [
+        "Vivianite"
+      ],
+      "specimens": [
+        {
+          "id": "87444",
+          "title": "Vivianite on Matrix",
+          "species": [
+            "Vivianite"
+          ],
+          "minerals": [
+            "Vivianite"
+          ],
+          "location": "Bolivia, Oruro, Huanuni",
+          "locality": "Bolivia, Oruro, Huanuni",
+          "size": "Miniature",
+          "dimensions": "Miniature",
+          "description": "<p>Star sheaf of dark green Vivianite crystals, up to 4 cm long, on matrix.</p>",
+          "properties": {
+            "Locality": "Bolivia, Oruro, Huanuni",
+            "Species": "Vivianite",
+            "Size": "Miniature"
+          },
+          "images": [
+            {
+              "url": "https://cdn.earthwonders.com/uploads/028ed536-17ea-41ce-a179-f5ab1dc59223",
+              "alt": "",
+              "title": ""
+            }
+          ]
+        }
+      ],
+      "coordinates": {
+        "latitude": -16.2902,
+        "longitude": -63.5887
+      },
+      "intensity": 0.3333333333333333
+    },
+    {
+      "name": "Tajikistan",
+      "country": "Tajikistan",
+      "specimenCount": 1,
+      "speciesCount": 2,
+      "species": [
+        "Tourmaline",
+        "Albite"
+      ],
+      "specimens": [
+        {
+          "id": "89696",
+          "title": "Tourmaline with Albite",
+          "species": [
+            "Tourmaline",
+            "Albite"
+          ],
+          "minerals": [
+            "Tourmaline",
+            "Albite"
+          ],
+          "location": "Tajikistan, Gorno-Badakhshan, Mika pegmatite",
+          "locality": "Tajikistan, Gorno-Badakhshan, Mika pegmatite",
+          "size": "Museum",
+          "dimensions": "Museum",
+          "description": "Tourmaline with Albite in Fabian Wildfang Collection in the EarthWonders gallery",
+          "properties": {
+            "Locality": "Tajikistan, Gorno-Badakhshan, Mika pegmatite",
+            "Species": "Tourmaline, Albite",
+            "Size": "Museum"
+          },
+          "images": [
+            {
+              "url": "https://cdn.earthwonders.com/uploads/4c33249e-6941-4894-9f4e-2c70fb3c9cf7",
+              "alt": "",
+              "title": ""
+            }
+          ]
+        }
+      ],
+      "coordinates": {
+        "latitude": 38.861,
+        "longitude": 71.2761
+      },
+      "intensity": 0.3333333333333333
+    },
+    {
+      "name": "Germany",
+      "country": "Germany",
+      "specimenCount": 1,
+      "speciesCount": 2,
+      "species": [
+        "Manganite",
+        "Barite"
+      ],
+      "specimens": [
+        {
+          "id": "87443",
+          "title": "Manganite Spray on Baryte",
+          "species": [
+            "Manganite",
+            "Barite"
+          ],
+          "minerals": [
+            "Manganite",
+            "Barite"
+          ],
+          "location": "Germany, Thuringia, Ilfeld",
+          "locality": "Germany, Thuringia, Ilfeld",
+          "size": "Small Cabinet",
+          "dimensions": "Small Cabinet",
+          "description": "<p>Dramatic spray of silvery-black Manganite crystals of up to 4 cm in length, sitting in a vug of nicely contrasting white Baryte.</p>",
+          "properties": {
+            "Locality": "Germany, Thuringia, Ilfeld",
+            "Species": "Manganite, Barite",
+            "Size": "Small Cabinet"
+          },
+          "images": [
+            {
+              "url": "https://cdn.earthwonders.com/uploads/d0314725-27da-4c83-b3f4-00ed8b88574b",
+              "alt": "",
+              "title": ""
+            }
+          ]
+        }
+      ],
+      "coordinates": {
+        "latitude": 51.1657,
+        "longitude": 10.4515
+      },
+      "intensity": 0.3333333333333333
+    },
+    {
+      "name": "Pakistan",
+      "country": "Pakistan",
+      "specimenCount": 1,
+      "speciesCount": 1,
+      "species": [
+        "Brookite"
+      ],
+      "specimens": [
+        {
+          "id": "87446",
+          "title": "Brookite on Matrix",
+          "species": [
+            "Brookite"
+          ],
+          "minerals": [
+            "Brookite"
+          ],
+          "location": "Pakistan, Balochistan, Kharan District",
+          "locality": "Pakistan, Balochistan, Kharan District",
+          "size": "Small Cabinet",
+          "dimensions": "Small Cabinet",
+          "description": "<p>Fan of 5 orange-brown, semi-transparent and lustrous pointed Brookite crystals of up to 4 cm in length, perched dramatically on a bed of white matrix.</p>",
+          "properties": {
+            "Locality": "Pakistan, Balochistan, Kharan District",
+            "Species": "Brookite",
+            "Size": "Small Cabinet"
+          },
+          "images": [
+            {
+              "url": "https://cdn.earthwonders.com/uploads/f695598e-fc77-43ae-8c5b-6a0f2221ce2d",
+              "alt": "",
+              "title": ""
+            }
+          ]
+        }
+      ],
+      "coordinates": {
+        "latitude": 30.3753,
+        "longitude": 69.3451
+      },
+      "intensity": 0.3333333333333333
+    },
+    {
+      "name": "Peru",
+      "country": "Peru",
+      "specimenCount": 1,
+      "speciesCount": 2,
+      "species": [
+        "Milky quartz",
+        "Pyrite"
+      ],
+      "specimens": [
+        {
+          "id": "87453",
+          "title": "Quartz on Pyrite",
+          "species": [
+            "Milky quartz",
+            "Pyrite"
+          ],
+          "minerals": [
+            "Milky quartz",
+            "Pyrite"
+          ],
+          "location": "Peru, Ancash, Huanzala Mine",
+          "locality": "Peru, Ancash, Huanzala Mine",
+          "size": "Small Cabinet",
+          "dimensions": "Small Cabinet",
+          "description": "<p>Spray of four white Quartz crystals of 5 cm in length perched dramatically on a cluster of Pyrite crystals up to 2 cm in size individually.</p>",
+          "properties": {
+            "Locality": "Peru, Ancash, Huanzala Mine",
+            "Species": "Milky quartz, Pyrite",
+            "Size": "Small Cabinet"
+          },
+          "images": [
+            {
+              "url": "https://cdn.earthwonders.com/uploads/760d685f-8699-449a-bbd4-62e871d9f6cb",
+              "alt": "",
+              "title": ""
+            }
+          ]
+        }
+      ],
+      "coordinates": {
+        "latitude": -9.19,
+        "longitude": -75.0152
+      },
+      "intensity": 0.3333333333333333
+    }
+  ],
+  "totalSpecimens": 15,
+  "totalSpecies": 23,
+  "totalCountries": 10
+};

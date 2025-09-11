@@ -5,7 +5,8 @@ class MineralCollectorMap {
         this.isDarkMode = true; // Default to dark mode
         this.isCollectionView = false;
         this.collectors = mineralCollectors;
-        this.personalCollection = personalCollection;
+        // Use Fabian's collection if available, otherwise fall back to personalCollection
+        this.personalCollection = typeof fabianCollection !== 'undefined' ? fabianCollection : personalCollection;
         this.stats = globalStats;
         this.markers = [];
         this.heatmapLayer = null;
@@ -192,11 +193,11 @@ class MineralCollectorMap {
                 'circle-color': [
                     'step',
                     ['get', 'point_count'],
-                    '#10b981',
+                    'rgba(16, 185, 129, 0.7)',
                     10,
-                    '#f59e0b',
+                    'rgba(245, 158, 11, 0.7)',
                     20,
-                    '#ef4444'
+                    'rgba(239, 68, 68, 0.7)'
                 ],
                 'circle-radius': [
                     'step',
@@ -207,8 +208,8 @@ class MineralCollectorMap {
                     20,
                     40
                 ],
-                'circle-stroke-width': 3,
-                'circle-stroke-color': '#ffffff'
+                'circle-stroke-width': 0,
+                'circle-stroke-color': 'transparent'
             }
         });
 
@@ -239,9 +240,9 @@ class MineralCollectorMap {
                     'interpolate',
                     ['linear'],
                     ['get', 'totalMinerals'],
-                    0, '#10b981',
-                    30, '#f59e0b',
-                    60, '#ef4444'
+                    0, 'rgba(16, 185, 129, 0.7)',
+                    30, 'rgba(245, 158, 11, 0.7)',
+                    60, 'rgba(239, 68, 68, 0.7)'
                 ],
                 'circle-radius': [
                     'interpolate',
@@ -250,8 +251,8 @@ class MineralCollectorMap {
                     0, 8,
                     100, 20
                 ],
-                'circle-stroke-width': 2,
-                'circle-stroke-color': '#ffffff'
+                'circle-stroke-width': 0,
+                'circle-stroke-color': 'transparent'
             }
         });
 
@@ -438,8 +439,8 @@ class MineralCollectorMap {
         this.openCollectionPanel(properties, minerals);
     }
 
-    openCollectionPanel(properties, minerals) {
-        console.log('Opening collection panel with data:', properties, minerals);
+    openCollectionPanel(properties, specimens) {
+        console.log('Opening collection panel with data:', properties, specimens);
         
         const panel = document.getElementById('collectionPanel');
         const title = document.getElementById('panelStateTitle');
@@ -458,22 +459,24 @@ class MineralCollectorMap {
         console.log('Panel found, updating content...');
 
         // Calculate focus percentage based on total collection
-        const totalCollectionMinerals = this.personalCollection.totalMinerals;
-        const stateCollectionMinerals = properties.mineralCount;
-        const focusPercentage = Math.round((stateCollectionMinerals / totalCollectionMinerals) * 100);
+        const totalCollectionSpecimens = this.personalCollection.totalSpecimens || this.personalCollection.totalMinerals;
+        const countryCollectionSpecimens = properties.specimenCount || properties.mineralCount;
+        const focusPercentage = Math.round((countryCollectionSpecimens / totalCollectionSpecimens) * 100);
 
-        // Update panel content
-        if (title) title.textContent = `${properties.state} Collection`;
-        if (subtitle) subtitle.textContent = `${properties.name} • ${properties.state}`;
-        if (mineralCount) mineralCount.textContent = properties.mineralCount;
-        if (speciesCount) speciesCount.textContent = minerals.length;
+        // Update panel content for country view
+        const displayName = properties.name || properties.country || properties.state;
+        const displayLocation = properties.country || properties.state || displayName;
+        
+        if (title) title.textContent = `${displayName} Collection`;
+        if (subtitle) subtitle.textContent = `${displayLocation}`;
+        if (mineralCount) mineralCount.textContent = properties.specimenCount || properties.mineralCount || 0;
         if (focusBadge) focusBadge.textContent = `${focusPercentage}% of Collection`;
-        if (description) description.textContent = properties.description;
+        if (description) description.textContent = properties.description || `Specimens from ${displayLocation}`;
 
-        // Generate mineral cards
+        // Generate mineral/specimen cards
         if (container) {
-            container.innerHTML = minerals.map(mineral => this.createMineralCard(mineral)).join('');
-            console.log('Generated mineral cards:', minerals.length);
+            container.innerHTML = specimens.map(specimen => this.createMineralCard(specimen)).join('');
+            console.log('Generated specimen cards:', specimens.length);
         }
 
         // Force initial state and repaint
@@ -507,8 +510,62 @@ class MineralCollectorMap {
         }, 400); // Wait for transition to complete
     }
 
-    createMineralCard(mineralName) {
-        // Generate realistic mineral data
+    createMineralCard(specimen) {
+        // Handle both old mineral name format and new specimen object format
+        if (typeof specimen === 'string') {
+            return this.createLegacyMineralCard(specimen);
+        }
+        
+        // Clean HTML from description and limit length
+        const cleanDescription = specimen.description 
+            ? specimen.description.replace(/<[^>]*>/g, '').substring(0, 150) + '...'
+            : 'No description available';
+            
+        // Get specimen image or fallback
+        const specimenImage = specimen.images && specimen.images.length > 0 
+            ? specimen.images[0].url 
+            : 'https://images.unsplash.com/photo-1518281420975-50db6e5d0a97?w=300&h=200&fit=crop';
+            
+        // Determine size badge color based on size
+        const sizeClass = this.getSizeClass(specimen.size);
+        
+        return `
+            <div class="mineral-card specimen-card">
+                <div class="specimen-size size-${sizeClass}">
+                    ${specimen.size || 'Unknown'}
+                </div>
+                
+                <div class="mineral-image">
+                    <img src="${specimenImage}" alt="${specimen.title}" onerror="this.src='https://images.unsplash.com/photo-1518281420975-50db6e5d0a97?w=300&h=200&fit=crop'">
+                </div>
+                
+                <div class="mineral-card-header">
+                    <div class="mineral-icon">
+                        💎
+                    </div>
+                    <h3 class="mineral-name">${specimen.title}</h3>
+                </div>
+                
+                <div class="mineral-details">
+                    <div class="mineral-detail">
+                        <span class="detail-label">Locality</span>
+                        <span class="detail-value">${specimen.locality || specimen.location || 'Unknown'}</span>
+                    </div>
+                    <div class="mineral-detail">
+                        <span class="detail-label">Size</span>
+                        <span class="detail-value">${specimen.size || 'Unknown'}</span>
+                    </div>
+                    <div class="mineral-detail description">
+                        <span class="detail-label">Description</span>
+                        <span class="detail-value">${cleanDescription}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    createLegacyMineralCard(mineralName) {
+        // Generate realistic mineral data for backwards compatibility
         const mineralData = this.getMineralData(mineralName);
         
         return `
@@ -548,6 +605,15 @@ class MineralCollectorMap {
                 </div>
             </div>
         `;
+    }
+
+    getSizeClass(size) {
+        if (!size) return 'unknown';
+        const lowerSize = size.toLowerCase();
+        if (lowerSize.includes('thumbnail') || lowerSize.includes('toenail')) return 'small';
+        if (lowerSize.includes('miniature') || lowerSize.includes('small')) return 'medium';
+        if (lowerSize.includes('cabinet') || lowerSize.includes('large')) return 'large';
+        return 'medium';
     }
 
     getMineralData(mineralName) {
@@ -721,15 +787,14 @@ class MineralCollectorMap {
         console.log('Updating view mode. Collection view:', this.isCollectionView);
         
         if (this.isCollectionView) {
-            // Show personal collection view stats
-            totalCollectors.textContent = this.personalCollection.focusAreas.length; // Number of focus areas/states
-            // Calculate unique species in personal collection
-            const allPersonalMinerals = this.personalCollection.focusAreas.flatMap(area => area.minerals);
-            const uniquePersonalSpecies = [...new Set(allPersonalMinerals)].length;
-            totalMinerals.textContent = uniquePersonalSpecies; // Unique species in personal collection
-            totalCountries.textContent = '1'; // All focus areas are in USA
-            collectorsLabel.textContent = 'States'; // Change label to States
-            countriesLabel.textContent = 'Country'; // Singular for 1 country
+            // Show personal collection view stats  
+            totalCollectors.textContent = '1'; // One collector (Fabian)
+            // Calculate total specimens in personal collection
+            const totalSpecimens = this.personalCollection.focusAreas.reduce((sum, area) => sum + (area.specimenCount || 0), 0);
+            totalMinerals.textContent = totalSpecimens; // Total specimens in personal collection
+            totalCountries.textContent = this.personalCollection.focusAreas.length; // Number of countries
+            collectorsLabel.textContent = 'Collector'; // Singular for one collector
+            countriesLabel.textContent = this.personalCollection.focusAreas.length === 1 ? 'Country' : 'Countries';
             
             // Hide collector layers (check if they exist first)
             this.setLayerVisibility('clusters', 'none');
@@ -741,7 +806,7 @@ class MineralCollectorMap {
             this.setLayerVisibility('collection-areas-line', 'none');
             
             // Show state boundary layers for collection view
-            this.setLayerVisibility('state-highlight-fill', 'visible');
+            this.setLayerVisibility('country-highlight-fill', 'visible');
             this.setLayerVisibility('state-highlight-stroke', 'visible');
             
             // Update legend to show mineral counts for collection view
@@ -769,7 +834,7 @@ class MineralCollectorMap {
             this.setLayerVisibility('collection-areas-line', 'none');
             
             // Hide state boundary layers for collection view
-            this.setLayerVisibility('state-highlight-fill', 'none');
+            this.setLayerVisibility('country-highlight-fill', 'none');
             this.setLayerVisibility('state-highlight-stroke', 'none');
             
             // Update legend back to default for collectors view
@@ -829,75 +894,68 @@ class MineralCollectorMap {
 
     async loadStateBoundaries() {
         try {
-            // Load US state boundaries GeoJSON from local file
-            const response = await fetch('./geo.json');
-            const statesData = await response.json();
+            // Load world countries boundaries GeoJSON from local file
+            const response = await fetch('./world-countries.geojson');
+            const countriesData = await response.json();
             
-            // Add source for state boundaries
-            if (!this.map.getSource('us-states')) {
-                this.map.addSource('us-states', {
+            // Add source for country boundaries
+            if (!this.map.getSource('world-countries')) {
+                this.map.addSource('world-countries', {
                     type: 'geojson',
-                    data: statesData
+                    data: countriesData
                 });
             }
             
-            // Add fill layer for highlighted states (initially hidden)
-            if (!this.map.getLayer('state-highlight-fill')) {
+            // Add fill layer for highlighted countries (initially hidden)
+            if (!this.map.getLayer('country-highlight-fill')) {
                 this.map.addLayer({
-                    id: 'state-highlight-fill',
+                    id: 'country-highlight-fill',
                     type: 'fill',
-                    source: 'us-states',
+                    source: 'world-countries',
                     layout: {
                         visibility: 'none'
                     },
                     paint: {
-                        'fill-color': 'rgba(0, 122, 255, 0.4)', // Consistent blue for all states
-                        'fill-opacity': [
-                            'case',
-                            ['in', ['get', 'NAME'], ['literal', ['Washington', 'Colorado', 'North Carolina', 'Arizona']]], 0.6,
-                            0 // No opacity for states without collections
-                        ]
+                        'fill-color': 'rgba(0, 122, 255, 0.25)', // Blue for personal collection countries
+                        'fill-opacity': 0.4
                     },
-                    filter: ['in', ['get', 'NAME'], ['literal', ['Washington', 'Colorado', 'North Carolina', 'Arizona']]]
+                    filter: ['in', ['get', 'name'], ['literal', ['Brazil', 'USA', 'China', 'Colombia', 'Russia', 'Bolivia', 'Tajikistan', 'Germany', 'Pakistan', 'Peru']]]
                 });
             }
             
-            // Add stroke layer for state boundaries
-            if (!this.map.getLayer('state-highlight-stroke')) {
+            // Add stroke layer for country boundaries
+            if (!this.map.getLayer('country-highlight-stroke')) {
                 this.map.addLayer({
-                    id: 'state-highlight-stroke',
+                    id: 'country-highlight-stroke',
                     type: 'line',
-                    source: 'us-states',
+                    source: 'world-countries',
                     layout: {
                         visibility: 'none'
                     },
                     paint: {
-                        'line-color': '#007AFF', // Consistent blue for all states
+                        'line-color': '#007AFF', // Blue for personal collection countries
                         'line-width': 2,
-                        'line-opacity': [
-                            'case',
-                            ['in', ['get', 'NAME'], ['literal', ['Washington', 'Colorado', 'North Carolina', 'Arizona']]], 0.8,
-                            0 // No opacity for states without collections
-                        ]
+                        'line-opacity': 0.8
                     },
-                    filter: ['in', ['get', 'NAME'], ['literal', ['Washington', 'Colorado', 'North Carolina', 'Arizona']]]
+                    filter: ['in', ['get', 'name'], ['literal', ['Brazil', 'USA', 'China', 'Colombia', 'Russia', 'Bolivia', 'Tajikistan', 'Germany', 'Pakistan', 'Peru']]]
                 });
             }
             
-            // Add click handler for states
-            this.map.on('click', 'state-highlight-fill', (e) => {
+            // Add click handler for countries
+            this.map.on('click', 'country-highlight-fill', (e) => {
                 if (this.isCollectionView && e.features.length > 0) {
-                    const stateName = e.features[0].properties.NAME;
-                    this.showStateCollection(stateName);
+                    const countryName = e.features[0].properties.name;
+                    console.log('Country clicked:', countryName);
+                    this.showCountryCollection(countryName);
                 }
             });
             
             // Change cursor on hover
-            this.map.on('mouseenter', 'state-highlight-fill', () => {
+            this.map.on('mouseenter', 'country-highlight-fill', () => {
                 this.map.getCanvas().style.cursor = 'pointer';
             });
             
-            this.map.on('mouseleave', 'state-highlight-fill', () => {
+            this.map.on('mouseleave', 'country-highlight-fill', () => {
                 this.map.getCanvas().style.cursor = '';
             });
             
@@ -906,22 +964,22 @@ class MineralCollectorMap {
         }
     }
 
-    showStateCollection(stateName) {
-        console.log('Showing state collection for:', stateName);
+    showCountryCollection(countryName) {
+        console.log('Showing country collection for:', countryName);
         
-        // Find the collection data for this state from personalCollection
-        const stateCollection = this.personalCollection.focusAreas.find(area => area.state === stateName);
+        // Find the collection data for this country from personalCollection
+        const countryCollection = this.personalCollection.focusAreas.find(area => area.name === countryName || area.country === countryName);
         
-        if (!stateCollection) {
-            console.log('No collection data for state:', stateName);
-            console.log('Available states:', this.personalCollection.focusAreas.map(area => area.state));
+        if (!countryCollection) {
+            console.log('No collection data for country:', countryName);
+            console.log('Available countries:', this.personalCollection.focusAreas.map(area => area.name));
             return;
         }
         
-        console.log('Found collection data:', stateCollection);
+        console.log('Found collection data:', countryCollection);
 
         // Use the existing openCollectionPanel function which handles animation properly
-        this.openCollectionPanel(stateCollection, stateCollection.minerals);
+        this.openCollectionPanel(countryCollection, countryCollection.specimens);
     }
 
     hideLoadingScreen() {

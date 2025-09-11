@@ -899,7 +899,7 @@ body {
 
 .mineral-image {
     width: 100%;
-    height: 120px;
+    height: 320px;
     overflow: hidden;
     border-radius: 16px 16px 0 0;
     position: relative;
@@ -909,6 +909,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     transition: transform 0.2s ease-out;
 }
 
@@ -1002,6 +1003,58 @@ body {
 .rarity-very-rare {
     background: rgba(88, 86, 214, 0.15);
     color: var(--secondary-color);
+}
+
+/* Enhanced styles for specimen cards */
+.specimen-card {
+    /* Inherits all mineral-card styles */
+}
+
+.specimen-size {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 2;
+}
+
+.size-small {
+    background: rgba(52, 199, 89, 0.15);
+    color: var(--green);
+}
+
+.size-medium {
+    background: rgba(255, 149, 0, 0.15);
+    color: var(--orange);
+}
+
+.size-large {
+    background: rgba(255, 59, 48, 0.15);
+    color: var(--red);
+}
+
+.size-unknown {
+    background: rgba(142, 142, 147, 0.15);
+    color: var(--text-secondary);
+}
+
+/* Description field styling */
+.mineral-detail.description {
+    grid-column: 1 / -1; /* Span full width */
+    margin-top: 8px;
+}
+
+.mineral-detail.description .detail-value {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--text-secondary);
+    max-height: 3.4em; /* Show ~2.5 lines */
+    overflow: hidden;
 }
 
 /* Custom scrollbar for panel */
