@@ -768,8 +768,8 @@ class MineralCollectorMap {
 
     async loadStateBoundaries() {
         try {
-            // Load US state boundaries GeoJSON
-            const response = await fetch('https://eric.clst.org/assets/wiki/uploads/Stuff/gz_2010_us_040_00_5m.json');
+            // Load US state boundaries GeoJSON from local file
+            const response = await fetch('./geo.json');
             const statesData = await response.json();
             
             // Add source for state boundaries
