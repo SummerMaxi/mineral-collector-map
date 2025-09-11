@@ -706,6 +706,7 @@ class MineralCollectorMap {
         // Recreate layers and update atmosphere after style change
         this.map.once('style.load', () => {
             this.updateGlobeAtmosphere();
+            this.loadStateBoundaries(); // Reload state boundaries
             this.setupDataSources();
         });
     }
@@ -713,32 +714,50 @@ class MineralCollectorMap {
     updateViewMode() {
         const totalCollectors = document.getElementById('totalCollectors');
         const totalMinerals = document.getElementById('totalMinerals');
+        const totalCountries = document.getElementById('totalCountries');
+        const collectorsLabel = document.querySelector('.stat-label'); // First stat label
+        const countriesLabel = document.querySelectorAll('.stat-label')[2]; // Third stat label (Countries)
         
         console.log('Updating view mode. Collection view:', this.isCollectionView);
         
         if (this.isCollectionView) {
-            // Show personal collection view
-            totalCollectors.textContent = this.personalCollection.focusAreas.length;
-            totalMinerals.textContent = this.personalCollection.totalMinerals;
+            // Show personal collection view stats
+            totalCollectors.textContent = this.personalCollection.focusAreas.length; // Number of focus areas/states
+            // Calculate unique species in personal collection
+            const allPersonalMinerals = this.personalCollection.focusAreas.flatMap(area => area.minerals);
+            const uniquePersonalSpecies = [...new Set(allPersonalMinerals)].length;
+            totalMinerals.textContent = uniquePersonalSpecies; // Unique species in personal collection
+            totalCountries.textContent = '1'; // All focus areas are in USA
+            collectorsLabel.textContent = 'States'; // Change label to States
+            countriesLabel.textContent = 'Country'; // Singular for 1 country
             
             // Hide collector layers (check if they exist first)
             this.setLayerVisibility('clusters', 'none');
             this.setLayerVisibility('cluster-count', 'none');
             this.setLayerVisibility('unclustered-point', 'none');
             
-            // Show collection layers (check if they exist first)
-            this.setLayerVisibility('collection-areas-fill', 'visible');
-            this.setLayerVisibility('collection-areas-line', 'visible');
+            // Hide old circular collection layers in favor of state boundaries
+            this.setLayerVisibility('collection-areas-fill', 'none');
+            this.setLayerVisibility('collection-areas-line', 'none');
             
             // Show state boundary layers for collection view
             this.setLayerVisibility('state-highlight-fill', 'visible');
             this.setLayerVisibility('state-highlight-stroke', 'visible');
             
+            // Update legend to show mineral counts for collection view
+            this.updateLegend('collection');
+            
             console.log('Collection layers should now be visible');
         } else {
             // Show global collectors view
             totalCollectors.textContent = this.stats.totalCollectors;
-            totalMinerals.textContent = this.stats.totalMinerals;
+            // Calculate unique species across all collectors
+            const allCollectorMinerals = this.collectors.flatMap(collector => collector.minerals);
+            const uniqueGlobalSpecies = [...new Set(allCollectorMinerals)].length;
+            totalMinerals.textContent = uniqueGlobalSpecies; // Unique species across all collectors
+            totalCountries.textContent = this.stats.totalCountries; // Show actual countries count
+            collectorsLabel.textContent = 'Collectors'; // Reset label to Collectors
+            countriesLabel.textContent = this.stats.totalCountries === 1 ? 'Country' : 'Countries'; // Singular/plural
             
             // Show collector layers (check if they exist first)
             this.setLayerVisibility('clusters', 'visible');
@@ -752,6 +771,48 @@ class MineralCollectorMap {
             // Hide state boundary layers for collection view
             this.setLayerVisibility('state-highlight-fill', 'none');
             this.setLayerVisibility('state-highlight-stroke', 'none');
+            
+            // Update legend back to default for collectors view
+            this.updateLegend('collectors');
+        }
+    }
+
+    updateLegend(mode) {
+        const legend = document.getElementById('legend');
+        if (!legend) return;
+
+        if (mode === 'collection') {
+            // Show mineral counts for each state
+            legend.innerHTML = `
+                <div class="legend-item">
+                    <span class="legend-color high"></span>
+                    <span>23 minerals</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color medium"></span>
+                    <span>15 minerals</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color low"></span>
+                    <span>8 minerals</span>
+                </div>
+            `;
+        } else {
+            // Default legend for collectors view
+            legend.innerHTML = `
+                <div class="legend-item">
+                    <span class="legend-color high"></span>
+                    <span>High</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color medium"></span>
+                    <span>Med</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color low"></span>
+                    <span>Low</span>
+                </div>
+            `;
         }
     }
 
@@ -790,17 +851,14 @@ class MineralCollectorMap {
                         visibility: 'none'
                     },
                     paint: {
-                        'fill-color': [
+                        'fill-color': 'rgba(0, 122, 255, 0.4)', // Consistent blue for all states
+                        'fill-opacity': [
                             'case',
-                            ['==', ['get', 'NAME'], 'Colorado'], 'rgba(52, 199, 89, 0.4)',
-                            ['==', ['get', 'NAME'], 'Arizona'], 'rgba(255, 149, 0, 0.4)',
-                            ['==', ['get', 'NAME'], 'California'], 'rgba(0, 122, 255, 0.4)',
-                            ['==', ['get', 'NAME'], 'Montana'], 'rgba(255, 59, 48, 0.4)',
-                            ['==', ['get', 'NAME'], 'Nevada'], 'rgba(88, 86, 214, 0.4)',
-                            'rgba(255, 255, 255, 0.1)'
-                        ],
-                        'fill-opacity': 0.6
-                    }
+                            ['in', ['get', 'NAME'], ['literal', ['Washington', 'Colorado', 'North Carolina', 'Arizona']]], 0.6,
+                            0 // No opacity for states without collections
+                        ]
+                    },
+                    filter: ['in', ['get', 'NAME'], ['literal', ['Washington', 'Colorado', 'North Carolina', 'Arizona']]]
                 });
             }
             
@@ -814,18 +872,15 @@ class MineralCollectorMap {
                         visibility: 'none'
                     },
                     paint: {
-                        'line-color': [
-                            'case',
-                            ['==', ['get', 'NAME'], 'Colorado'], '#34C759',
-                            ['==', ['get', 'NAME'], 'Arizona'], '#FF9500',
-                            ['==', ['get', 'NAME'], 'California'], '#007AFF',
-                            ['==', ['get', 'NAME'], 'Montana'], '#FF3B30',
-                            ['==', ['get', 'NAME'], 'Nevada'], '#5856D6',
-                            'rgba(255, 255, 255, 0.3)'
-                        ],
+                        'line-color': '#007AFF', // Consistent blue for all states
                         'line-width': 2,
-                        'line-opacity': 0.8
-                    }
+                        'line-opacity': [
+                            'case',
+                            ['in', ['get', 'NAME'], ['literal', ['Washington', 'Colorado', 'North Carolina', 'Arizona']]], 0.8,
+                            0 // No opacity for states without collections
+                        ]
+                    },
+                    filter: ['in', ['get', 'NAME'], ['literal', ['Washington', 'Colorado', 'North Carolina', 'Arizona']]]
                 });
             }
             
@@ -852,106 +907,21 @@ class MineralCollectorMap {
     }
 
     showStateCollection(stateName) {
-        // Find the collection data for this state
-        const stateCollections = {
-            'Colorado': {
-                minerals: 47,
-                species: 23,
-                focus: 15.2,
-                description: 'Rich collection from the Colorado Mineral Belt, featuring world-class specimens from mines around Denver and the Front Range.',
-                specimens: [
-                    { name: 'Amazonite', location: 'Pikes Peak', count: 8 },
-                    { name: 'Rhodochrosite', location: 'Sweet Home Mine', count: 3 },
-                    { name: 'Aquamarine', location: 'Mount Antero', count: 5 },
-                    { name: 'Topaz', location: 'Devils Head', count: 12 },
-                    { name: 'Fluorite', location: 'Jamestown', count: 6 }
-                ]
-            },
-            'Arizona': {
-                minerals: 35,
-                species: 18,
-                focus: 11.3,
-                description: 'Desert treasures from the copper mining regions, including spectacular specimens from Globe and Bisbee.',
-                specimens: [
-                    { name: 'Azurite', location: 'Bisbee', count: 9 },
-                    { name: 'Malachite', location: 'Morenci', count: 7 },
-                    { name: 'Chrysocolla', location: 'Globe', count: 5 },
-                    { name: 'Turquoise', location: 'Kingman', count: 8 },
-                    { name: 'Peridot', location: 'San Carlos', count: 4 }
-                ]
-            },
-            'California': {
-                minerals: 62,
-                species: 31,
-                focus: 20.1,
-                description: 'Diverse collection from the Golden State, ranging from gold specimens to rare earth minerals from multiple geological zones.',
-                specimens: [
-                    { name: 'Gold', location: 'Mother Lode', count: 15 },
-                    { name: 'Tourmaline', location: 'Pala', count: 12 },
-                    { name: 'Benitoite', location: 'San Benito', count: 2 },
-                    { name: 'Cinnabar', location: 'New Almaden', count: 8 },
-                    { name: 'Kunzite', location: 'Pala', count: 6 }
-                ]
-            },
-            'Montana': {
-                minerals: 28,
-                species: 14,
-                focus: 9.1,
-                description: 'Big Sky specimens featuring sapphires and rare earth minerals from the treasure state.',
-                specimens: [
-                    { name: 'Sapphire', location: 'Yogo Gulch', count: 11 },
-                    { name: 'Garnet', location: 'Alder Gulch', count: 8 },
-                    { name: 'Platinum', location: 'Stillwater', count: 3 },
-                    { name: 'Agate', location: 'Dryhead', count: 4 }
-                ]
-            },
-            'Nevada': {
-                minerals: 41,
-                species: 19,
-                focus: 13.3,
-                description: 'Silver state specimens from historic mining districts, featuring exceptional metallic minerals.',
-                specimens: [
-                    { name: 'Silver', location: 'Comstock Lode', count: 14 },
-                    { name: 'Turquoise', location: 'Carlin', count: 9 },
-                    { name: 'Opal', location: 'Virgin Valley', count: 7 },
-                    { name: 'Realgar', location: 'Getchell', count: 5 }
-                ]
-            }
-        };
-
-        const collection = stateCollections[stateName];
-        if (!collection) {
+        console.log('Showing state collection for:', stateName);
+        
+        // Find the collection data for this state from personalCollection
+        const stateCollection = this.personalCollection.focusAreas.find(area => area.state === stateName);
+        
+        if (!stateCollection) {
             console.log('No collection data for state:', stateName);
+            console.log('Available states:', this.personalCollection.focusAreas.map(area => area.state));
             return;
         }
+        
+        console.log('Found collection data:', stateCollection);
 
-        // Update panel content
-        document.getElementById('panelStateTitle').textContent = `${stateName} Collection`;
-        document.getElementById('panelStateSubtitle').textContent = `Specimens from ${stateName}`;
-        document.getElementById('panelMineralCount').textContent = collection.minerals;
-        document.getElementById('panelSpeciesCount').textContent = collection.species;
-        document.getElementById('panelFocusBadge').textContent = `${collection.focus}% Focus`;
-        document.getElementById('panelDescription').textContent = collection.description;
-
-        // Clear and populate minerals container
-        const mineralsContainer = document.getElementById('mineralsContainer');
-        mineralsContainer.innerHTML = '';
-
-        collection.specimens.forEach(specimen => {
-            const mineralCard = document.createElement('div');
-            mineralCard.className = 'mineral-card';
-            mineralCard.innerHTML = `
-                <div class="mineral-info">
-                    <h4 class="mineral-name">${specimen.name}</h4>
-                    <p class="mineral-location">${specimen.location}</p>
-                    <p class="mineral-count">${specimen.count} specimens</p>
-                </div>
-            `;
-            mineralsContainer.appendChild(mineralCard);
-        });
-
-        // Show the panel
-        document.getElementById('collectionPanel').classList.add('open');
+        // Use the existing openCollectionPanel function which handles animation properly
+        this.openCollectionPanel(stateCollection, stateCollection.minerals);
     }
 
     hideLoadingScreen() {
